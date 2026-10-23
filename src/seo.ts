@@ -21,7 +21,7 @@ export function buildHead(): string {
   // ── Textos ─────────────────────────────────────────────────────────────────
   // El título es lo que se ve en la pestaña y en la vista previa de LinkedIn.
   // La descripción conviene que no pase de unos 160 caracteres (Google la corta).
-  const title = `${profile.name} · ${profile.title}`;
+  const title = `Portfolio de ${profile.name}`;
   const description =
     'Desarrollador Backend Junior: Java, Spring Boot, PostgreSQL, Docker y Kubernetes. ' +
     'APIs REST, microservicios, mensajería con RabbitMQ y CI/CD con GitHub Actions.';
