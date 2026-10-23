@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Aquí el plugin "seo-head" (vite.config.ts) inserta título, descripción,
+         Open Graph, Twitter Card y datos estructurados (JSON-LD). -->
+    <!--app-head-->
+
+    <!--
+      Script en línea que se ejecuta ANTES de pintar la página (por eso no es un módulo).
+      1. Añade la clase "js" a <html>: así el CSS sabe que hay JavaScript.
+      2. Decide si se reproduce el efecto de escritura de la portada:
+         solo si el usuario NO pide movimiento reducido y no lo ha visto ya en esta
+         pestaña (sessionStorage). En ese caso añade "typing-pending", que oculta
+         el texto de la terminal para que no "parpadee" antes de empezar a escribirse.
+      3. Red de seguridad: si React tarda más de 2,5 s en cargar (o falla),
+         quita la clase y el texto se ve completo. El contenido nunca queda oculto.
+    -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        try {
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          var seen = sessionStorage.getItem('hero-typed') === '1';
+          if (!reduce && !seen) {
+            root.classList.add('typing-pending');
+            setTimeout(function () { root.classList.remove('typing-pending'); }, 2500);
+          }
+        } catch (e) { /* sessionStorage bloqueado: simplemente no animamos */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- En la compilación, scripts/prerender.mjs sustituye el comentario por el
+         HTML completo de la página: así se ve sin JavaScript y los buscadores lo leen. -->
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

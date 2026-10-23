@@ -1,0 +1,122 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   index.css — Estilos globales: Tailwind, paleta y animaciones.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Tailwind v4: una sola línea importa todo. Solo se genera el CSS de las
+   clases que realmente usamos en los componentes (el resultado pesa pocos KB). */
+@import 'tailwindcss';
+
+/* ── Tema: paleta y tipografía ────────────────────────────────────────────────
+   Cada variable --color-X crea utilidades como text-X, bg-X, border-X.
+   Contrastes sobre el panel (#070b08), todos ≥ 4.5:1 (nivel AA de WCAG):
+     fg 16.7:1 · accent 11.4:1 · string 15.2:1 · keyword 10.6:1 · number 13.7:1
+     muted 6.8:1 · punct 5.5:1 */
+@theme {
+  --color-bg: #000000;
+  --color-panel: #070b08;
+  --color-line: #183522;
+  --color-fg: #c8f7d4;
+  --color-accent: #4ade80;
+  --color-string: #bef264;
+  --color-keyword: #2dd4bf;
+  --color-number: #fcd34d;
+  --color-muted: #7f9f88;
+  --color-punct: #6f8f78;
+
+  /* Fuentes monoespaciadas DEL SISTEMA: no se descarga ninguna fuente, así que
+     no hay retraso ni salto de texto al cargar. Cada sistema usa la suya. */
+  --font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    color-scheme: dark;
+    /* Al saltar a #seccion, deja hueco para la barra fija superior. */
+    scroll-padding-top: 4.5rem;
+  }
+
+  body {
+    background: var(--color-bg);
+    /* Textura sutil de "rejilla" de terminal; puramente decorativa. */
+    background-image: radial-gradient(rgba(74, 222, 128, 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Foco visible SOLO con teclado (focus-visible), bien contrastado. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: #000;
+  }
+}
+
+/* ── Portada: ocultar el texto justo antes de escribirlo ──────────────────────
+   La clase la pone el script de index.html y la quita useTypewriter. */
+.typing-pending [data-typewriter] {
+  visibility: hidden;
+}
+
+/* ── Animaciones: SOLO si el usuario no pide movimiento reducido ──────────────
+   Todo lo que se mueve está dentro de este bloque. Con
+   prefers-reduced-motion: reduce, la página es estática y todo se ve al momento. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Aparición de cada ventana al hacer scroll.
+     .reveal-ready la pone React; .is-visible la pone useReveal. */
+  /* El movimiento se aplica a .reveal-body (hijo) para no desplazar la
+     <section>, que es el destino de los enlaces #ancla. */
+  .reveal-ready .reveal .reveal-body {
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s ease;
+  }
+  .reveal-ready .reveal:not(.is-visible) .reveal-body {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+
+  /* Dentro de la ventana, las líneas aparecen una tras otra ("se va escribiendo").
+     El retraso es índice × 25 ms, con un tope de 40 líneas (1 s) para no hacer esperar. */
+  .reveal-ready .reveal .code-line {
+    transition: opacity 0.35s ease;
+    transition-delay: calc(min(var(--i, 0), 40) * 25ms);
+  }
+  .reveal-ready .reveal:not(.is-visible) .code-line {
+    opacity: 0;
+  }
+
+  /* Cursor parpadeante. steps(1) = encendido/apagado, sin fundido. */
+  .cursor {
+    animation: blink 1s steps(1) infinite;
+  }
+
+  /* Flecha "desplázate" que flota suavemente. */
+  .scroll-hint {
+    animation: float 2s ease-in-out infinite;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(4px);
+  }
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<!--
+  og-image.html — Diseño de la imagen que aparece al compartir el enlace en LinkedIn.
+  No forma parte de la web: scripts/og-image.mjs lo abre en un navegador sin
+  ventana (headless) y hace una captura de 1200×630 → public/og-image.png.
+  Si cambias tu título, edita este archivo y ejecuta `npm run og-image`.
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+      body {
+        background: #000 radial-gradient(rgba(74, 222, 128, 0.09) 1.5px, transparent 1.5px) 0 0 / 28px 28px;
+        font-family: 'Cascadia Code', Consolas, monospace;
+        color: #c8f7d4;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .window {
+        width: 1040px; border: 2px solid #183522; border-radius: 16px; background: #070b08;
+        box-shadow: 0 0 120px -20px rgba(74, 222, 128, 0.45); overflow: hidden;
+      }
+      .bar { height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 28px;
+             border-bottom: 2px solid #183522; background: #000; color: #7f9f88; font-size: 22px; }
+      .dot { width: 16px; height: 16px; border-radius: 50%; }
+      .body { padding: 44px 56px 52px; font-size: 32px; line-height: 1.6; }
+      .p { color: #4ade80; } .m { color: #7f9f88; } .k { color: #2dd4bf; }
+      h1 { margin: 6px 0 18px; font-size: 76px; line-height: 1.1; color: #4ade80;
+           text-shadow: 0 0 30px rgba(74, 222, 128, 0.5); }
+      .s { color: #bef264; font-size: 28px; }
+      .cursor { display: inline-block; width: 18px; height: 36px; background: #4ade80; vertical-align: -6px; }
+    </style>
+  </head>
+  <body>
+    <div class="window">
+      <div class="bar">
+        <span class="dot" style="background:#ff5f57"></span>
+        <span class="dot" style="background:#febc2e"></span>
+        <span class="dot" style="background:#28c840"></span>
+        <span style="margin-left:12px">pablo@portfolio: ~</span>
+      </div>
+      <div class="body">
+        <div><span class="p">pablo@portfolio</span><span class="m">:</span><span class="k">~</span><span class="m">$ </span>whoami</div>
+        <h1>Pablo García García</h1>
+        <div class="s">Desarrollador Backend Junior</div>
+        <div class="s">Java · Spring Boot · PostgreSQL · Docker · Kubernetes</div>
+        <div><span class="p">pablo@portfolio</span><span class="m">:</span><span class="k">~</span><span class="m">$ </span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </body>
+</html>

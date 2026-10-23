@@ -1,0 +1,26 @@
+{
+  // Configuración de TypeScript para todo el proyecto (código de la app + vite.config.ts).
+  // Solo se usa para comprobar tipos (`tsc --noEmit`); quien compila de verdad es Vite (esbuild).
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "types": ["vite/client", "node"],
+
+    // Modo estricto: obliga a tratar null/undefined y evita "any" implícitos.
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Necesario con bundlers: cada archivo debe poder compilarse por separado.
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src", "vite.config.ts"]
+}
